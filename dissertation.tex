@@ -1,0 +1,243 @@
+\documentclass[12pt, a4paper, twoside]{report}
+
+% --- Basic Setup ---
+% \usepackage[utf8]{inputenc} % Input encoding (UTF-8 is standard for modern LaTeX).
+% Note: 'inputenc' is often not explicitly needed with modern LaTeX distributions (TeX Live 2018+),
+% as UTF-8 is the default. Uncomment if you encounter encoding issues.
+\usepackage[T1]{fontenc}    % Font encoding for correct hyphenation and character display
+\usepackage{lmodern}        % Use Latin Modern fonts, a good default for academic documents
+\usepackage[german, english]{babel} % Language support: German first for decimal comma, then English
+\usepackage{csquotes}       % Context-sensitive quotation marks, required by biblatex for some styles
+\usepackage{blindtext}      % For placeholder text. REMOVE THIS PACKAGE FOR YOUR ACTUAL DISSERTATION!
+
+% --- Page Layout & Spacing ---
+\usepackage[
+    a4paper,
+    top=3cm,
+    bottom=3cm,
+    left=3.5cm,
+    right=2.5cm,
+    headheight=14.5pt, % Required by fancyhdr for proper header placement
+    % showframe % Uncomment this line to visualize the page margins for debugging purposes
+]{geometry} % Package for custom page dimensions and margins
+\usepackage{setspace}       % For controlling line spacing throughout the document
+\doublespacing              % Set default to double spacing, common for dissertation drafts
+% You can change this to \onehalfspacing or \singlespacing as needed.
+
+% --- Mathematics & Units ---
+\usepackage{amsmath, amssymb, amsfonts} % AMS mathematical packages for advanced math typesetting
+\usepackage{bm}             % Bold math symbols (e.g., for vectors \bm{v})
+\usepackage{siunitx}        % For correct typesetting of units and numbers (e.g., \SI{10,5}{\kilo\gram})
+% Configure siunitx to use comma as decimal separator, aligning with your preferences
+\sisetup{output-decimal-marker={,}}
+
+% --- Graphics & Tables ---
+\usepackage{graphicx}       % For including images (e.g., .png, .jpg, .pdf)
+\usepackage{float}          % Provides the [H] float specifier for precise placement of figures/tables
+\usepackage{caption}        % Customizing captions for figures and tables
+\usepackage{subcaption}     % For creating subfigures and subtables within a single float
+\usepackage{booktabs}       % For professional-looking tables with better horizontal rules
+\usepackage{multirow}       % For cells spanning multiple rows in tables
+\usepackage{longtable}      % For tables that can span multiple pages
+
+% --- Hyperlinks & PDF Metadata ---
+\usepackage[
+    colorlinks=true,        % Make links colored instead of boxed outlines
+    linkcolor=blue,         % Color for internal links (e.g., TOC, section references)
+    citecolor=blue,         % Color for citation links
+    urlcolor=blue,          % Color for URL links
+    filecolor=magenta,      % Color for file links
+    pdftitle={\dissertationtitle}, % Sets the PDF document title metadata
+    pdfauthor={\dissertationauthor}, % Sets the PDF document author metadata
+    pdfsubject={Dissertation},  % Sets the PDF document subject metadata
+    pdfkeywords={\dissertationkeywords}, % Sets PDF document keywords
+    pdfproducer={LaTeX with pdfLaTeX}, % Indicates the software used to produce the PDF
+    pdfcreator={LaTeX},         % Indicates the primary creator
+]{hyperref} % Creates clickable hyperlinks within the PDF and embeds metadata
+
+% --- Headers and Footers ---
+\usepackage{fancyhdr}       % Package for customizing headers and footers
+\pagestyle{fancy}           % Apply the 'fancy' style to all pages
+\fancyhf{} % Clear all header and footer fields initially
+% Page numbers: placed on the right on odd-numbered pages (RO) and left on even-numbered pages (LE)
+\fancyhead[RO,LE]{\thepage}
+% Chapter title on the left on odd-numbered pages (LO), converted to uppercase, then back to normal case
+\fancyhead[LO]{\nouppercase{\rightmark}}
+% Section title on the right on even-numbered pages (RE), converted to uppercase, then back to normal case
+\fancyhead[RE]{\nouppercase{\leftmark}}
+\renewcommand{\headrulewidth}{0.4pt} % Sets the thickness of the line under the header
+\renewcommand{\footrulewidth}{0pt}   % Sets the thickness of the line above the footer (0pt means no line)
+
+% --- Bibliography ---
+% Using biblatex with biber backend for modern, flexible bibliography management
+\addbibresource{references.bib} % Specifies your bibliography file (kept in root for this example)
+\usepackage[
+    backend=biber,      % Use Biber for processing bibliography (more powerful than BibTeX)
+    style=authoryear,   % Primary citation style (e.g., (Smith, 2023))
+    citestyle=authoryear, % Citation command style (can be different from bibliography style)
+    sorting=nty,        % Sort bibliography by name, title, year
+    natbib=true,        % Allows using natbib commands like \citet, \citep alongside biblatex commands
+    doi=false,          % Do not print DOI in the bibliography (set to true if you want them)
+    url=false,          % Do not print URLs
+    isbn=false,         % Do not print ISBN
+    eprint=false,       % Do not print eprint
+]{biblatex}
+
+% --- Glossary and Abbreviations ---
+% Package for creating lists of abbreviations, symbols, and a general glossary
+\usepackage[
+    nogroupskip, % Prevents extra vertical space between glossary groups
+    acronyms,    % Enable the list of acronyms
+    symbols,     % Enable the list of symbols (uncomment if you need it)
+    toc          % Add glossary/abbreviations to the Table of Contents
+]{glossaries-extra}
+\setglossarystyle{list} % Choose a style for your glossary/abbreviations list
+\makeglossaries % Command to initialize and create necessary files for glossaries
+
+% --- Input Dissertation Metadata ---
+% All custom dissertation information is now defined in a separate file.
+\input{frontmatter/dissertation_metadata}
+
+% --- Custom Title Page Definition ---
+% This command defines the entire layout of your dissertation's title page.
+% It uses variables defined in dissertation_metadata.tex
+\newcommand{\makemydissertationtitlepage}{
+    \thispagestyle{empty} % Ensure no page number appears on the title page
+    \begin{center}
+        \vspace*{2cm} % Vertical space from the top of the page
+
+        % Placeholder for your university logo.
+        % Ensure 'uni-logo.png' is in the same directory as your .tex file,
+        % or provide the full path (e.g., 'images/uni-logo.png').
+        {\includegraphics[width=0.3\textwidth]{uni-logo.png}\par}
+        \vspace{1cm}
+
+        {\LARGE \bfseries \dissertationuniversity \par} % University name
+        {\Large \dissertationfaculty \par}    % Faculty name
+        {\large \dissertationdepartment \par} % Department name
+        \vspace{2cm}
+
+        {\Huge \bfseries \dissertationtitle \par} % Dissertation title
+        \vspace{1.5cm}
+
+        {\Large Dissertation \par} % Type of document
+        {\large zur Erlangung des Grades eines \dissertationdegree \par} % German degree text
+        {\large (Submitted for the degree of \dissertationdegree) \par} % English degree text
+        \vspace{1cm}
+
+        {\large vorgelegt von \par} % Submitted by
+        {\Huge \bfseries \dissertationauthor \par} % Author's name (large and bold)
+        \vspace{2cm}
+
+        {\large Erstgutachter: \dissertationsupervisorone \par} % First supervisor
+        {\large Zweitgutachter: \dissertationsupervisortwo \par} % Second supervisor
+        \vspace{1.5cm}
+
+        {\large Eingereicht am: \dissertationsubmissiondate \par} % Submission date
+    \end{center}
+    \newpage % Start the next content (Abstract) on a new page
+}
+
+% --- Custom Abstract Environment ---
+% Defines a clean environment for your abstract, typically unnumbered and centered.
+\newenvironment{abstractdissertation}{
+    \cleardoublepage % Ensure abstract starts on a new, odd-numbered page
+    \thispagestyle{empty} % No page number for the abstract page
+    \null\vfill % Vertically center the abstract title on the page
+    \begin{center}
+        \bfseries \Huge Abstract
+    \end{center}
+    % Add "Abstract" to the Table of Contents without a chapter number
+    \addcontentsline{toc}{chapter}{Abstract}
+    \vspace{1cm} % Space after the abstract title
+}{\vfill\null} % Ends the abstract environment, balancing vertical space
+
+% --- Example List of Abbreviations Definitions ---
+% Define your acronyms and their full forms here.
+\newacronym{latex}{LaTeX}{A document preparation system}
+\newacronym{guten}{GUTEN}{Grand Unified Theory of Everything}
+\newacronym{phd}{PhD}{Doctor of Philosophy}
+\newacronym{cern}{CERN}{European Organization for Nuclear Research}
+
+
+% --- Document Start ---
+\begin{document}
+
+% --- Front Matter ---
+% The \frontmatter command sets page numbering to roman numerals (i, ii, iii...)
+% and makes chapters unnumbered (e.g., "Abstract" instead of "Chapter 1 Abstract").
+\frontmatter
+
+\makemydissertationtitlepage % Call the custom command to generate the title page
+
+% --- Dedication (Optional) ---
+% Uncomment and fill in if you have a dedication
+% \cleardoublepage
+% \chapter*{Dedication}
+% \addcontentsline{toc}{chapter}{Dedication}
+% \input{frontmatter/dedication_content} % Content for your dedication
+
+% --- Declaration (Optional) ---
+% Uncomment and fill in if you have a declaration
+% \cleardoublepage
+% \chapter*{Declaration}
+% \addcontentsline{toc}{chapter}{Declaration}
+% \input{frontmatter/declaration_content} % Content for your declaration
+
+% --- Abstract Section ---
+\begin{abstractdissertation}
+    \input{frontmatter/abstract_content} % Content for your abstract
+    \vspace{1em} % Small vertical space before keywords
+    \noindent\textbf{Keywords:} \dissertationkeywords
+\end{abstractdissertation}
+
+% --- Acknowledgments Section ---
+\cleardoublepage % Ensures acknowledgments start on a new page
+\chapter*{Acknowledgments} % Unnumbered chapter title for Acknowledgments
+\addcontentsline{toc}{chapter}{Acknowledgments} % Add "Acknowledgments" to TOC
+\thispagestyle{plain} % Page number at the bottom center for this page
+\input{frontmatter/acknowledgments_content} % Content for your acknowledgments
+
+% --- Table of Contents, List of Figures, List of Tables, List of Abbreviations ---
+\cleardoublepage % Ensures TOC starts on a new page
+\tableofcontents % Generates the Table of Contents
+
+\cleardoublepage % Ensures List of Figures starts on a new page
+\listoffigures % Generates the List of Figures
+
+\cleardoublepage % Ensures List of Tables starts on a new page
+\listoftables % Generates the List of Tables
+
+\cleardoublepage % Ensures List of Abbreviations starts on a new page
+\printglossary[type=acronym, title=List of Abbreviations] % Prints the List of Abbreviations
+
+% --- Main Matter ---
+% The \mainmatter command switches to Arabic page numbering (1, 2, 3...)
+% and makes chapters numbered (e.g., "Chapter 1 Introduction").
+\mainmatter
+
+% --- Include all chapters ---
+% Use \include for main chapters. Each \include will start a new page.
+\include{chapters/00_introduction/introduction}
+\include{chapters/01_literature_review/literature_review}
+\include{chapters/02_methodology/methodology}
+\include{chapters/03_results/results}
+\include{chapters/04_discussion/discussion}
+% Add more \include lines for your additional chapters
+
+% --- Back Matter ---
+% The \backmatter command typically removes chapter numbering for appendices and bibliography.
+\backmatter
+
+\appendix % Marks the start of appendices. Chapters following this command will be numbered A, B, C etc.
+
+% --- Include all appendices ---
+\include{endmatter/appendices/appendix_a}
+\include{endmatter/appendices/appendix_b}
+% Add more \include lines for your additional appendices
+
+% --- Bibliography ---
+\cleardoublepage % Ensures bibliography starts on a new page
+\printbibliography[heading=bibintoc, title={Bibliography}] % Prints the bibliography and adds it to the Table of Contents
+
+\end{document}

@@ -1,0 +1,38 @@
+% chapters/01_literature_review/literature_review.tex
+\chapter{Literature Review}
+\label{chap:literature_review}
+A thorough review of existing literature reveals various approaches to quantum gravity, including string theory, loop quantum gravity, and emergent gravity theories \citep{Smith2023, Bloggs2021}. While each approach offers unique insights, a definitive consensus remains elusive.
+
+% Input sections from separate files
+\input{chapters/01_literature_review/01_background_theory}
+\input{chapters/01_literature_review/02_related_work}
+
+\blindtext[1] % More placeholder content
+
+% Example table (assuming you have a tables/ subfolder here, or img/ for general figures)
+\begin{table}[h!]
+    \centering
+    \caption{Key Parameters from Selected Theoretical Models}
+    \label{tab:sample-data}
+    \begin{tabular}{l c c S[table-format=2.2]}
+        \toprule
+        Model & Year Proposed & Number of Dimensions & {Predicted Mass (\si{\mega\electronvolt})} \\
+        \midrule
+        String Theory (Type I) & 1980s & 10 & 1,25 \\
+        Loop Quantum Gravity & 1990s & 4 & 0,87 \\
+        Emergent Gravity (Example) & 2010s & 4 & 1,12 \\
+        \bottomrule
+    \end{tabular}
+    \caption*{Note: Predicted masses are illustrative and depend on specific model parameters.}
+\end{table}
+
+% Example figure (assuming you have a img/ subfolder in your root, or figs/ for chapter-specific ones)
+\begin{figure}[h!]
+    \centering
+    % You should replace 'conceptual-model.pdf' with your actual image file.
+    % Make sure it's located at 'img/conceptual-model.pdf'
+    \includegraphics[width=0.7\textwidth]{img/conceptual-model.pdf}
+    \caption{A conceptual model illustrating the unification of fundamental forces at high energies.}
+    \label{fig:conceptual-model}
+\end{figure}
+As depicted in Figure \ref{fig:conceptual-model}, the convergence implies a single force governing all interactions at the Planck scale.
